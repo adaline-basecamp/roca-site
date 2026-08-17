@@ -1,0 +1,160 @@
+[
+  {
+    "slug": "opening",
+    "label": "Grand Opening",
+    "count": 18,
+    "images": [
+      {
+        "src": "/gallery/opening/opening-01.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/opening/opening-02.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-03.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/opening/opening-04.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-05.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-06.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-07.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-08.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/opening/opening-09.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-10.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-11.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-12.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/opening/opening-13.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/opening/opening-14.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-15.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-16.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-17.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/opening/opening-18.webp",
+        "width": 1800,
+        "height": 1200
+      }
+    ]
+  },
+  {
+    "slug": "station",
+    "label": "Station & Facilities",
+    "count": 6,
+    "images": [
+      {
+        "src": "/gallery/station/station-01.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/station/station-02.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/station/station-03.webp",
+        "width": 1800,
+        "height": 2700
+      },
+      {
+        "src": "/gallery/station/station-04.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/station/station-05.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/gallery/station/station-06.webp",
+        "width": 1800,
+        "height": 1200
+      }
+    ]
+  },
+  {
+    "slug": "mrpl-partnership",
+    "label": "MRPL Partnership",
+    "count": 0,
+    "images": []
+  },
+  {
+    "slug": "our-team",
+    "label": "Our Team",
+    "count": 0,
+    "images": []
+  },
+  {
+    "slug": "community-safety",
+    "label": "Community & Safety",
+    "count": 0,
+    "images": []
+  },
+  {
+    "slug": "milestones",
+    "label": "Milestones",
+    "count": 0,
+    "images": []
+  }
+]

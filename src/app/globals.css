@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Roca Fuels design system
+
+   Two colour vocabularies, deliberately kept apart:
+
+   1. BRAND      — the deep navy and the 11-stop refining gradient from the
+                   Brand Guidelines PDF. The gradient is identity, not UI: it
+                   belongs to the logo, hairlines and the drop. Never a fill
+                   behind text.
+   2. FUNCTIONAL — the client's Brand & Content Documentation assigns a
+                   meaning to each accent (cyan = route, teal = amenity,
+                   yellow = availability, orange = business, red = support,
+                   purple = corporate). An accent on this site is a signal
+                   about what a thing IS, never decoration.
+
+   Navy stays dominant. Light surfaces carry the utility content; navy
+   carries the brand moments.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+
+  /* House curves. Overriding Tailwind's defaults means every transition-*
+     utility and ease-* class resolves to these without per-class edits. */
+  --default-transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+
+  /* ── Navy ramp. 900 is the client's #073D63; 800 is Corporate Blue. ── */
+  --color-navy-950: #04283f;
+  --color-navy-900: #073d63;
+  --color-navy-800: #0b4568;
+  --color-navy-700: #0e628f;
+  --color-navy-600: #1b7aab;
+  /* Light end of the navy ramp — aliases of the neutral surfaces, kept so the
+     ramp reads continuously (navy-50 … navy-950) at call sites. */
+  --color-navy-100: #dbe6ec;
+  --color-navy-50: #f3f7fa;
+
+  /* ── Ink + neutrals ── */
+  --color-ink: #102c3c;
+  /* The client's palette specifies #667985 for muted copy, which measures
+     4.03:1 on the tinted surfaces it sits on — under the 4.5 their own colour
+     governance requires. Darkened to the nearest value that clears it on
+     white, #F3F7FA and #EAF3F8 alike. Flagged for client sign-off. */
+  --color-muted: #5c6e7a;
+  --color-surface: #f3f7fa;
+  --color-surface-pale: #eaf3f8;
+  --color-line: #dbe6ec;
+
+  /* ── Functional accents (meaning-carrying) ──
+     Two tiers, and the distinction matters:
+
+     The base tone is a SIGNAL — it is correct on fills, rules, icon chips and
+     dots, where nothing has to be read off it. At small text sizes on a light
+     surface these same values measure 1.4–3.3:1 (Availability Yellow is the
+     worst at 1.41), so setting type in them fails the client's own rule that
+     "all text and interactive states should maintain accessible contrast".
+
+     The -ink tier is the same hue darkened to the nearest value clearing
+     4.5:1 on white, #F3F7FA and #EAF3F8. Use it for any accent-coloured text. */
+  --color-route: #0aa6ca;
+  --color-amenity: #19b893;
+  --color-open: #ffc510;
+  --color-business: #ff8b1f;
+  --color-support: #f2454f;
+  --color-corporate: #8f3d98;
+
+  --color-route-ink: #077891;
+  --color-amenity-ink: #117d64;
+  --color-open-ink: #876808;
+  --color-business-ink: #a65a14;
+  --color-support-ink: #c93942;
+  --color-corporate-ink: #8f3d98;
+
+  /* ── Brand gradient stops (identity, from the guidelines PDF) ── */
+  --color-drop-blue: #1c59c5;
+  --color-drop-cyan: #009cc4;
+  --color-drop-teal: #006b84;
+  --color-drop-emerald: #15b98c;
+  --color-drop-olive: #8bba44;
+  --color-drop-green: #76a01c;
+  --color-drop-gold: #f5ca00;
+  --color-drop-amber: #ff9f13;
+  --color-drop-copper: #cd6c00;
+  --color-drop-orange: #ff6632;
+  --color-drop-red: #fd2c3a;
+
+  --radius-card: 26px;
+  --shadow-lift: 0 24px 70px rgba(7, 61, 99, 0.13);
+  --shadow-card: 0 2px 4px rgba(7, 61, 99, 0.04), 0 12px 32px rgba(7, 61, 99, 0.06);
+}
+
+:root {
+  /* Identity gradient — the refining spectrum, in logo order. */
+  --gradient-drop: linear-gradient(
+    135deg,
+    var(--color-drop-blue) 0%,
+    var(--color-drop-cyan) 18%,
+    var(--color-drop-teal) 28%,
+    var(--color-drop-emerald) 40%,
+    var(--color-drop-olive) 50%,
+    var(--color-drop-green) 58%,
+    var(--color-drop-gold) 68%,
+    var(--color-drop-amber) 76%,
+    var(--color-drop-copper) 84%,
+    var(--color-drop-orange) 92%,
+    var(--color-drop-red) 100%
+  );
+
+  /* Functional accent flow — the client's ordered signal spectrum. Used for
+     hairlines and progress, where each colour is passed through in journey
+     order rather than shown as a decorative rainbow. */
+  --gradient-flow: linear-gradient(
+    90deg,
+    var(--color-route) 0%,
+    var(--color-amenity) 22%,
+    var(--color-open) 46%,
+    var(--color-business) 68%,
+    var(--color-support) 86%,
+    var(--color-corporate) 100%
+  );
+
+  --gradient-corporate: linear-gradient(135deg, #073d63 0%, #0b5278 100%);
+  --gradient-hero-surface: linear-gradient(180deg, #f9fcfe 0%, #eaf3f8 100%);
+
+  --background: #ffffff;
+  --foreground: var(--color-ink);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Lenis owns scrolling; native smooth-behavior would fight its momentum. */
+html.lenis {
+  scroll-behavior: auto;
+}
+
+/* Anchor navigation has to clear the fixed header stack. */
+html {
+  scroll-padding-top: 7.5rem;
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────
+   Display sits on the geometric face (the Nordique Pro stand-in); body sits
+   on the humanist one, which holds up far better at 16px. The scale runs
+   ~7.5rem display against 0.75rem eyebrow — a 10:1 span.
+   ──────────────────────────────────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+.hero-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.85rem, 7.6vw, 7.25rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.section-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.1rem, 4.6vw, 4.15rem);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* ── Identity surfaces ───────────────────────────────────────────────────── */
+.bg-gradient-drop {
+  background: var(--gradient-drop);
+}
+
+.bg-gradient-flow {
+  background: var(--gradient-flow);
+}
+
+.bg-gradient-corporate {
+  background: var(--gradient-corporate);
+}
+
+.bg-hero-surface {
+  background: var(--gradient-hero-surface);
+}
+
+.text-gradient-drop {
+  background: var(--gradient-drop);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ── Micro-details ───────────────────────────────────────────────────────── */
+::selection {
+  background: var(--color-open);
+  color: var(--color-navy-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-route);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Navy surfaces need a light ring instead — the cyan disappears on them. */
+.on-navy :focus-visible {
+  outline-color: var(--color-open);
+}
+
+/* Tabular figures wherever numbers are compared or counted. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
