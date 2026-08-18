@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "roca-site",
+  "compatibility_date": "2026-08-18",
+
+  // Static assets only — there is no Worker script and no `main` entry.
+  //
+  // This file has to exist in the repo. Without it, `wrangler deploy` runs its
+  // auto-config, sees Next.js, assumes a server-rendered app and installs the
+  // OpenNext adapter, which then fails looking for
+  // `.next/standalone/.next/server/pages-manifest.json`. That file is never
+  // produced here: next.config.ts sets `output: "export"`, so the build emits
+  // plain HTML into `out/` and there is no server bundle for OpenNext to wrap.
+  "assets": {
+    "directory": "./out",
+
+    // `next build` emits 404.html for the not-found route; serve it with a
+    // real 404 status rather than falling back to index.html, which would make
+    // every bad URL look like a soft 200 to crawlers.
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
