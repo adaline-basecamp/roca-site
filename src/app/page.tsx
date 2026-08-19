@@ -78,7 +78,14 @@ export default function Home() {
             <div className="order-3">
               <p
                 data-hero="subtitle"
-                className="mt-8 max-w-lg text-lg leading-relaxed text-muted lg:mt-7"
+                // Ink on mobile, muted from lg up. The mobile scrim is opened
+                // so the liquid reads, and --muted is only ~4.6:1 on pure
+                // white — no headroom for a tinted backdrop, measured at 3.9.
+                // --ink is the palette's designated body-text colour, and the
+                // client's own rule reserves muted for helper copy, never for
+                // essential information. Desktop keeps muted: its scrim is
+                // strong enough there that contrast was never at risk.
+                className="mt-8 max-w-lg text-lg leading-relaxed text-ink lg:mt-7 lg:text-muted"
               >
                 Convenient refuelling, useful station amenities and direct
                 customer support — available around the clock in Pavangad.
@@ -266,16 +273,10 @@ export default function Home() {
                   one of India&rsquo;s established refining names stands behind
                   every litre sold here.
                 </p>
-                <Link
-                  href="/fuels"
-                  className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-navy-900"
-                >
-                  Read the full fuel story
-                  <Icon
-                    name="arrow"
-                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
-                  />
-                </Link>
+                {/* No "read the full fuel story" link. It pointed at the old
+                    standalone /fuels page, which the v2 content folded into
+                    this very section — the full story is what this card is
+                    sitting inside, so the link led away from the answer. */}
               </div>
             </Reveal>
           </div>

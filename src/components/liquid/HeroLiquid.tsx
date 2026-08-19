@@ -56,10 +56,20 @@ export default function HeroLiquid() {
         dprCap={1.25}
       />
 
-      {/* Reading scrim. Only the headline column is protected — it clears
-          entirely by the mid-point so the flow runs at full strength around
-          and behind the station card, where no text sits on it. */}
-      <span className="absolute inset-0 bg-[linear-gradient(103deg,rgba(250,253,255,0.97)_0%,rgba(250,253,255,0.95)_34%,rgba(250,253,255,0.72)_50%,rgba(250,253,255,0.3)_66%,rgba(250,253,255,0.06)_82%,rgba(250,253,255,0)_100%)] lg:bg-[linear-gradient(103deg,rgba(250,253,255,0.96)_0%,rgba(250,253,255,0.93)_28%,rgba(250,253,255,0.6)_43%,rgba(250,253,255,0.18)_58%,rgba(250,253,255,0)_76%)]" />
+      {/* Reading scrim.
+          Two different problems, so two different gradients.
+
+          From lg up the layout is side-by-side, so the scrim runs horizontally:
+          it protects the headline column and clears by the mid-point, leaving
+          the flow at full strength around the model where no text sits.
+
+          Below lg the layout is stacked, and that same horizontal gradient was
+          still 0.72 opaque at the halfway mark — across a 390px viewport that
+          veils the entire width and the wave disappears. Mobile instead runs
+          the scrim vertically, veiling the headline band at the top and the
+          copy and CTAs at the bottom, and opening up through the middle where
+          the model sits and there is no text to protect. */}
+      <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(250,253,255,0.9)_0%,rgba(250,253,255,0.82)_16%,rgba(250,253,255,0.38)_31%,rgba(250,253,255,0.1)_44%,rgba(250,253,255,0.26)_57%,rgba(250,253,255,0.68)_66%,rgba(250,253,255,0.94)_74%,rgba(250,253,255,0.96)_100%)] lg:bg-[linear-gradient(103deg,rgba(250,253,255,0.96)_0%,rgba(250,253,255,0.93)_28%,rgba(250,253,255,0.6)_43%,rgba(250,253,255,0.18)_58%,rgba(250,253,255,0)_76%)]" />
 
       {/* Softens the top edge into the header */}
       <span className="absolute inset-x-0 top-0 h-20 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),transparent)]" />
