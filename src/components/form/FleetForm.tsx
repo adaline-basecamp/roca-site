@@ -2,8 +2,8 @@
 
 import { SITE } from "@/lib/constants";
 import SubmitDrop from "@/components/motion/SubmitDrop";
-import { Field, SelectField, TextareaField, ConsentField } from "./Field";
-import { useFormPost } from "./useFormPost";
+import { FormScope, Field, SelectField, TextareaField, ConsentField } from "./Field";
+import { HONEYPOT_NAME, useFormPost } from "./useFormPost";
 import FormResult from "./FormResult";
 
 const FLEET_SIZES = [
@@ -14,7 +14,10 @@ const FLEET_SIZES = [
 ] as const;
 
 export default function FleetForm() {
-  const { status, showPanel, submit } = useFormPost("fleet-enquiry");
+  const { status, showPanel, submit } = useFormPost(
+    "fleet-enquiry",
+    "New fleet enquiry — Roca Fuels website"
+  );
 
   if (status === "success" && showPanel) {
     return (
@@ -26,50 +29,74 @@ export default function FleetForm() {
   }
 
   return (
-    <form onSubmit={submit} className="space-y-5">
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="name" label="Name" required autoComplete="name" />
-        <Field id="company" label="Company" required autoComplete="organization" />
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="phone" label="Phone" type="tel" required autoComplete="tel" />
-        <SelectField
-          id="fleetSize"
-          label="Fleet size"
-          options={FLEET_SIZES}
-          required
-          placeholder="Select fleet size"
+    <FormScope prefix="fleet">
+      <form onSubmit={submit} className="relative space-y-5">
+        {/* Honeypot — unlabelled and untabbable, so only an automated filler
+            will ever put a value in it. Clipped rather than display:none or
+            shoved off-screen: display:none is trivial for a bot to detect, and
+            a large negative offset can widen the document. */}
+        <input
+          type="text"
+          name={HONEYPOT_NAME}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            border: 0,
+            overflow: "hidden",
+            clipPath: "inset(50%)",
+            whiteSpace: "nowrap",
+          }}
         />
-      </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field id="name" label="Name" required autoComplete="name" />
+          <Field id="company" label="Company" required autoComplete="organization" />
+        </div>
 
-      <TextareaField
-        id="requirement"
-        label="Requirement"
-        rows={4}
-        required
-        placeholder="Tell us about your regular vehicle requirements."
-      />
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field id="phone" label="Phone" type="tel" required autoComplete="tel" />
+          <SelectField
+            id="fleetSize"
+            label="Fleet size"
+            options={FLEET_SIZES}
+            required
+            placeholder="Select fleet size"
+          />
+        </div>
 
-      <ConsentField id="consent">
-        I agree to be contacted about this enquiry.
-      </ConsentField>
+        <TextareaField
+          id="requirement"
+          label="Requirement"
+          rows={4}
+          required
+          placeholder="Tell us about your regular vehicle requirements."
+        />
 
-      {status === "error" ? <ErrorNote /> : null}
+        <ConsentField id="consent">
+          I agree to be contacted about this enquiry.
+        </ConsentField>
 
-      <button
-        type="submit"
-        disabled={status === "submitting" || status === "success"}
-        className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-navy-900 px-7 py-3.5 text-[0.95rem] font-semibold text-white transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-navy-800 disabled:pointer-events-none disabled:opacity-90 sm:w-auto"
-      >
-        <SubmitDrop status={status} className="h-5 w-5" />
-        {status === "submitting"
-          ? "Sending…"
-          : status === "success"
-            ? "Sent"
-            : "Request a Business Call →"}
-      </button>
-    </form>
+        {status === "error" ? <ErrorNote /> : null}
+
+        <button
+          type="submit"
+          disabled={status === "submitting" || status === "success"}
+          className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-navy-900 px-7 py-3.5 text-[0.95rem] font-semibold text-white transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-navy-800 disabled:pointer-events-none disabled:opacity-90 sm:w-auto"
+        >
+          <SubmitDrop status={status} className="h-5 w-5" />
+          {status === "submitting"
+            ? "Sending…"
+            : status === "success"
+              ? "Sent"
+              : "Request a Business Call →"}
+        </button>
+      </form>
+    </FormScope>
   );
 }
 

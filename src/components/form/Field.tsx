@@ -1,5 +1,35 @@
 "use client";
 
+import { createContext, useContext } from "react";
+
+/**
+ * Namespaces DOM ids per form.
+ *
+ * Both forms live on the same page and both had fields called name, contact
+ * and consent, so their ids collided. A duplicate id is not just invalid HTML:
+ * `label[for]` resolves to the FIRST match in the document, so tapping "Name"
+ * in the contact form focused the fleet form's input far up the page. That is
+ * worst on mobile, where the label is the tap target.
+ *
+ * The id gets the prefix; the `name` stays raw, so payload keys are unchanged.
+ */
+const FormScopeCtx = createContext<string | null>(null);
+
+export function FormScope({
+  prefix,
+  children,
+}: {
+  prefix: string;
+  children: React.ReactNode;
+}) {
+  return <FormScopeCtx.Provider value={prefix}>{children}</FormScopeCtx.Provider>;
+}
+
+function useDomId(id: string) {
+  const prefix = useContext(FormScopeCtx);
+  return prefix ? `${prefix}-${id}` : id;
+}
+
 const CONTROL =
   "mt-2 w-full rounded-xl border border-line bg-white px-4 py-3 text-[0.95rem] text-ink outline-none transition-[border-color,box-shadow] duration-300 placeholder:text-muted/60 focus:border-navy-700 focus:shadow-[0_0_0_4px_rgba(10,166,202,0.12)]";
 
@@ -22,16 +52,17 @@ export function Field({
   autoComplete?: string;
   className?: string;
 }) {
+  const domId = useDomId(id);
   return (
     <div className={className}>
-      <label htmlFor={id} className={LABEL}>
+      <label htmlFor={domId} className={LABEL}>
         {label}
         {!required ? (
           <span className="ml-1.5 font-normal text-muted">(optional)</span>
         ) : null}
       </label>
       <input
-        id={id}
+        id={domId}
         name={id}
         type={type}
         required={required}
@@ -60,14 +91,15 @@ export function SelectField({
   onChange?: (value: string) => void;
   className?: string;
 }) {
+  const domId = useDomId(id);
   return (
     <div className={className}>
-      <label htmlFor={id} className={LABEL}>
+      <label htmlFor={domId} className={LABEL}>
         {label}
       </label>
       <div className="relative">
         <select
-          id={id}
+          id={domId}
           name={id}
           required={required}
           defaultValue=""
@@ -117,13 +149,14 @@ export function TextareaField({
   placeholder?: string;
   className?: string;
 }) {
+  const domId = useDomId(id);
   return (
     <div className={className}>
-      <label htmlFor={id} className={LABEL}>
+      <label htmlFor={domId} className={LABEL}>
         {label}
       </label>
       <textarea
-        id={id}
+        id={domId}
         name={id}
         rows={rows}
         required={required}
@@ -141,13 +174,14 @@ export function ConsentField({
   id: string;
   children: React.ReactNode;
 }) {
+  const domId = useDomId(id);
   return (
     <label
-      htmlFor={id}
+      htmlFor={domId}
       className="flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-muted"
     >
       <input
-        id={id}
+        id={domId}
         name={id}
         type="checkbox"
         required
