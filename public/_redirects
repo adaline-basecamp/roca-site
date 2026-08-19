@@ -1,0 +1,15 @@
+# The standalone Our Fuels and About pages were folded into the homepage by
+# the v2 content. Their URLs may be linked or indexed, so they 301 to the
+# section that replaced them rather than 404ing.
+#
+# Served by Cloudflare's static-asset handler, which reads this file from the
+# root of the assets directory. Next copies public/ into out/ at build time.
+#
+# trailingSlash: true is set, so both forms are listed — a visitor or crawler
+# can hold either.
+/fuels     /#fuels    301
+/fuels/    /#fuels    301
+/fuels/*   /#fuels    301
+/about     /#about    301
+/about/    /#about    301
+/about/*   /#about    301

@@ -399,7 +399,7 @@ export default function Home() {
                 and consistency alike.
               </p>
               <Link
-                href="/about"
+                href="#about"
                 className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-navy-900"
               >
                 More about Roca Fuels
