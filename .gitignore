@@ -45,3 +45,6 @@ next-env.d.ts
 # Client asset originals live outside the repo — the folder is kept locally
 # for reference but must never be committed.
 /Client shared assets/
+
+# wrangler local scratch (dev bundles, state)
+/.wrangler/
