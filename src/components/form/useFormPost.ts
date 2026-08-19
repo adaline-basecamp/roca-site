@@ -4,12 +4,28 @@ import { useEffect, useState } from "react";
 
 export type Status = "idle" | "submitting" | "success" | "error";
 
-const WEBHOOK_URL = process.env.NEXT_PUBLIC_LEAD_WEBHOOK;
-// Web3Forms identifies the destination inbox by an access key sent in the
-// body. Kept as its own variable rather than baked into the URL so the
-// provider can be swapped without touching this file — anything that accepts
-// a JSON POST works, and endpoints that need no key simply leave it unset.
-const ACCESS_KEY = process.env.NEXT_PUBLIC_LEAD_ACCESS_KEY;
+/**
+ * Endpoint and access key, with committed defaults.
+ *
+ * Both are NEXT_PUBLIC_, so they are compiled into the client bundle and are
+ * readable by anyone loading the site — that is inherent to any browser-side
+ * form service, not a leak. A Web3Forms access key only identifies the
+ * destination inbox; it grants no account access and can be rotated from the
+ * Web3Forms dashboard at any time.
+ *
+ * They are committed rather than left to build variables because this Worker
+ * serves static assets only, and Cloudflare does not expose variables on such
+ * a project — the deploy would silently ship a build with no endpoint and both
+ * forms would fall back to "call us" without anything looking broken.
+ *
+ * The env vars still win when set, so a different provider or a rotated key
+ * needs no code change if a build-variable path becomes available.
+ */
+const WEBHOOK_URL =
+  process.env.NEXT_PUBLIC_LEAD_WEBHOOK ?? "https://api.web3forms.com/submit";
+const ACCESS_KEY =
+  process.env.NEXT_PUBLIC_LEAD_ACCESS_KEY ??
+  "b0cff82c-23a5-4b73-b9ef-00a42b363ddd";
 
 // The success glyph needs a beat to play before the panel replaces it.
 const SUCCESS_PANEL_DELAY_MS = 700;
